@@ -1,2 +1,3 @@
 # Obsoleet
-Simple php static website
+
+Minimalist framework to build static websites.
