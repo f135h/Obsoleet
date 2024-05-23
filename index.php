@@ -8,6 +8,7 @@ use Obsoleet\Response,
 $server = new Obsoleet\Server();
 
 $server->map('GET', '/', function (Request $req, Response $res, array $args) : Response {
+    $res->set_http_status('200');
     $res->set_template(dirname(__FILE__) . '/src/templates/test.php');
     $res->push_data('title', 'Titre!');
     $res->push_data('nav', ['one', 'two', 'three', 'four', 'five']);
