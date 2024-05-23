@@ -7,28 +7,28 @@ use \Closure;
 class Route
 {
     protected $method;
-    protected $handler;
+    protected $callback;
     protected $path;
 
-    public function __construct(string $method, string $path, Closure $handler)
+    public function __construct(string $method, string $path, Closure $callback)
     {
         $this->method = strtolower($method);
-        $this->handler = $handler;
+        $this->callback = $callback;
         $this->path = $path;
     }
 
-    public function getMethod() : string
+    public function get_method() : string
     {
         return $this->method;
     }
 
-    public function getPath() : string
+    public function get_path() : string
     {
         return $this->path;
     }
 
-    public function getHandler() : Closure
+    public function get_callback() : Closure
     {
-        return $this->handler;
+        return $this->callback;
     }
 }
