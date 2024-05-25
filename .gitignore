@@ -1,3 +1,5 @@
 .vscode
 .htaccess
+index.php
 /src/templates
+/public

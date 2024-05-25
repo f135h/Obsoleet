@@ -4,29 +4,25 @@ namespace Obsoleet;
 
 class Response
 {
-    protected $data;
-    protected $template;
     protected $headers;
-    protected $http_status_header;
-    protected $http_status_codes;
+    protected $datas;
+    protected $template;
 
     public function __construct()
     {
-        $this->data = [];
-        $this->template = '';
         $this->headers = [];
-        $this->http_status_codes = json_decode(file_get_contents(dirname(__DIR__, 1) . '/http_status_codes.json'), true);
+        $this->datas = [];
+        $this->template = '';
     }
 
-    public function get_output(bool $minify = true) : string
+    public function get_output(bool $minify = false) : string
     {
         ob_start();
-        header($this->http_status_header);
         foreach($this->headers as $header)
         {
             header($header);
         }
-        foreach($this->data as $key => $value)
+        foreach($this->datas as $key => $value)
         {
             $$key = $value;
         }
@@ -43,19 +39,34 @@ class Response
         return $output;
     }
 
-    public function set_http_status(string $code) : void
+    public function get_header(string $name) : string
     {
-        $this->http_status_header = 'HTTP/2' . ' ' . $this->http_status_codes[$code]['code'] . ' ' . $this->http_status_codes[$code]['message']; 
+        return $this->headers[$name];
+    }
+
+    public function set_header(string $name, string $value) : void
+    {
+        $this->headers[$name] = $value;
+    }
+
+    public function unset_header(string $name) : void
+    {
+        unset($this->headers[$name]);
     }
 
     public function get_data( string $name) : string
     {
-        return null === $this->data[$name] ? '' : $this->data[$name];
+        return null === $this->datas[$name] ? '' : $this->datas[$name];
     }
 
-    public function push_data($name, $value) : void
+    public function set_data(string $name, mixed $value) : void
     {
-        $this->data[$name] = $value;
+        $this->datas[$name] = $value;
+    }
+
+    public function unset_data(string $name) : void
+    {
+        unset($this->datas[$name]);
     }
 
     public function get_template() : string
